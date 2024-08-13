@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -11,16 +11,28 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import dataSlice from '@/features/dataSlice';
+import dataSlicePersisted from '@/features/dataSlicePersisted';
 
+// Define the persist configuration for only dataSlicePersisted
 const persistConfig = {
-  key: 'root',
+  key: 'dataPersist', // Change the key to something specific for this slice
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, dataSlice);
+// Apply the persistReducer to the dataSlicePersisted only
+const persistedDataSlicePersisted = persistReducer(
+  persistConfig,
+  dataSlicePersisted
+);
+
+// Combine reducers
+const rootReducer = combineReducers({
+  data: dataSlice,
+  dataPersist: persistedDataSlicePersisted, // Only this slice is persisted
+});
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -30,3 +42,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

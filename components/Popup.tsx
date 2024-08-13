@@ -5,19 +5,10 @@ import { Dialog, Transition } from '@headlessui/react';
 interface PopupProps {
   setIsOpen: (isOpen: boolean) => void;
   isOpen: boolean;
-  dataSender: object;
   children: ReactNode;
   fullScreen: boolean;
 }
-export function Popup({
-  setIsOpen,
-  isOpen,
-  dataSender,
-  children,
-  fullScreen,
-}: PopupProps) {
-  console.log(dataSender);
-
+export function Popup({ setIsOpen, isOpen, children, fullScreen }: PopupProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

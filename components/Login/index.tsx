@@ -1,21 +1,26 @@
 'use client';
 import React, { useState } from 'react';
 import { Popup } from '../Popup';
-import Verification from './Verification';
+import SendVerification from './SendVerification';
+import { useAppDispatch } from '@/hooks';
+import { setDataUser } from '@/features/dataSlice';
 
+interface CreateRegisterUserResults {
+  success: boolean;
+  data?: any;
+  error?: string;
+}
 interface LoginProps {
-  createRegisterUser: (formData: FormData) => Promise<{
-    success: boolean;
-    data?: any;
-    error?: string;
-  }>;
+  createRegisterUser: (
+    formData: FormData
+  ) => Promise<CreateRegisterUserResults>;
 }
 
 const Login: React.FC<LoginProps> = ({ createRegisterUser }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [dataSenderObj, setDataSenderObj] = useState<object>({});
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,7 +31,12 @@ const Login: React.FC<LoginProps> = ({ createRegisterUser }) => {
       );
       setIsLoading(false);
       if (result.success) {
-        setDataSenderObj(result.data);
+        dispatch(
+          setDataUser({
+            phoneNumber: result.data?.data?.phoneNumber,
+            email: result.data?.data?.email,
+          })
+        );
         setIsOpen(true);
         setMessage('Registration successful!');
         console.log('Registration data:', result.data);
@@ -39,8 +49,9 @@ const Login: React.FC<LoginProps> = ({ createRegisterUser }) => {
       console.error('Error in handleSubmit:', error);
     }
   };
+
   return (
-    <div className='flex justify-center items-center h-screen bg-gray-100'>
+    <div className='flex justify-center items-center h-screen bg-gray-100 px-4'>
       <div className='w-full max-w-md bg-white p-8 rounded-lg shadow-md'>
         <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
         <form onSubmit={handleSubmit} className='space-y-4'>
@@ -49,12 +60,12 @@ const Login: React.FC<LoginProps> = ({ createRegisterUser }) => {
               htmlFor='name'
               className='block text-sm font-medium text-gray-700'
             >
-              Name
+              Email
             </label>
             <input
               id='name'
               name='username'
-              type='text'
+              type='email'
               className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
               required
             />
@@ -69,7 +80,7 @@ const Login: React.FC<LoginProps> = ({ createRegisterUser }) => {
             <input
               name='mobilePhone'
               id='mobile'
-              type='number'
+              type='text'
               className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
               required
             />
@@ -81,18 +92,13 @@ const Login: React.FC<LoginProps> = ({ createRegisterUser }) => {
               isLoading && 'opacity-50'
             }`}
           >
-            {isLoading ? 'Please wait...' : 'Login'}
+            {isLoading ? 'Please wait...' : 'Register'}
           </button>
         </form>
         {message && <p className='text-center text-red-500'>{message}</p>}
       </div>
-      <Popup
-        fullScreen={false}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        dataSender={dataSenderObj}
-      >
-        <Verification />
+      <Popup fullScreen={false} isOpen={isOpen} setIsOpen={setIsOpen}>
+        <SendVerification />
       </Popup>
     </div>
   );

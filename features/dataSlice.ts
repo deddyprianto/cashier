@@ -1,21 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+interface UserLoginDataType {
+  email: string;
+  phoneNumber: string;
+}
+interface DataState {
+  dataUserLogin: UserLoginDataType;
+}
 
-const initialState = {
-  value: 0,
+const initialState: DataState = {
+  dataUserLogin: {
+    email: '',
+    phoneNumber: '',
+  },
 };
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const dataSlice = createSlice({
+  name: 'dataSlice',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
+    setDataUser: (state, action: PayloadAction<UserLoginDataType>) => {
+      state.dataUserLogin = action.payload;
     },
   },
 });
 
-export const { increment, decrement } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { setDataUser } = dataSlice.actions;
+export default dataSlice.reducer;

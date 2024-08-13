@@ -3,7 +3,7 @@
 export async function createRegisterUser(formData: FormData) {
   const rawFormData = {
     email: formData.get('username'),
-    phoneNumber: `+65${formData.get('mobilePhone')}`,
+    phoneNumber: formData.get('mobilePhone'),
     password: 'Bd5ja7CQ',
     username: formData.get('username'),
     referralCode: '',
