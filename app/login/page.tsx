@@ -1,7 +1,5 @@
-import React from 'react';
-import { createRegisterUser } from './actions';
-import Login from '@/components/Login';
+import LoginCP from '@/components/Login';
 
-export default async function login() {
-  return <Login createRegisterUser={createRegisterUser} />;
+export default async function Login() {
+  return <LoginCP />;
 }

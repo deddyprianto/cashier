@@ -6,6 +6,7 @@ interface AccessTokenDataType {
   idToken: object;
   refreshToken: object;
   statusCustomer: boolean;
+  isLogin: boolean;
 }
 interface DataState {
   accessTokenData: AccessTokenDataType;
@@ -18,6 +19,7 @@ const initialState: DataState = {
     idToken: {},
     refreshToken: {},
     statusCustomer: true,
+    isLogin: false,
   },
 };
 

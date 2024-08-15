@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface UserLoginDataType {
-  email: string;
+  email?: string;
   phoneNumber: string;
 }
 interface DataState {

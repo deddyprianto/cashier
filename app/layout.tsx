@@ -1,12 +1,14 @@
-import { AppProps } from 'next/app';
 import type { Metadata } from 'next';
 import ProviderSessions from '@/components/ProviderSessions';
-import { Inter } from 'next/font/google';
+import { Albert_Sans } from 'next/font/google';
 import './globals.css';
 import React, { ReactNode } from 'react';
 import Header from '@/components/Header';
 
-const inter = Inter({ subsets: ['latin'] });
+const albertSans = Albert_Sans({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,7 +21,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={albertSans.className}>
         <ProviderSessions>
           <Header />
           {children}

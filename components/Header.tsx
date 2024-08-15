@@ -26,6 +26,14 @@ const Header = () => {
                 <p className='text-blue-500 hover:underline'>Login</p>
               </Link>
             </li>
+            <li>
+              <Link
+                href='/register'
+                className='flex justify-center items-center flex-col'
+              >
+                <p className='text-blue-500 hover:underline'>Register</p>
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
