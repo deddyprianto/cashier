@@ -21,7 +21,7 @@ const Register: React.FC<RegisterProps> = ({ createRegisterUser }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  // FN
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {

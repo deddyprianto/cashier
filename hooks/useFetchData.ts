@@ -23,11 +23,11 @@ export const useFetchData = <T>({
   body,
   queryParams,
 }: FetchDataParams): FetchDataResult<T> => {
-  const myVariable = process.env.NEXT_PUBLIC_BASE_URL_API;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_API;
 
   const [loading, setLoading] = useState(false);
 
-  const url = new URL(`${myVariable}/${endpoint}`);
+  const url = new URL(`${baseUrl}${endpoint}`);
   if (queryParams) {
     Object.entries(queryParams).forEach(([key, value]) => {
       url.searchParams.append(key, String(value));

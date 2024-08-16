@@ -1,6 +1,7 @@
 'use server';
 
 export async function createRegisterUser(formData: FormData) {
+  console.log(process.env.NEXT_PUBLIC_BASE_URL_API);
   const rawFormData = {
     email: formData.get('username'),
     phoneNumber: formData.get('phoneNumber'),
@@ -16,7 +17,7 @@ export async function createRegisterUser(formData: FormData) {
 
   try {
     const responseRegisterUser = await fetch(
-      'https://api-muji.proseller-dev.com/crm/api/customer/register',
+      `${process.env.NEXT_PUBLIC_BASE_URL_API}customer/register`,
       {
         method: 'POST',
         body: JSON.stringify(rawFormData),

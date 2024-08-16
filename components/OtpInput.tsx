@@ -18,7 +18,7 @@ const OTPInput = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        'https://api-muji.proseller-dev.com/crm/api/customer/login',
+        `${process.env.NEXT_PUBLIC_BASE_URL_API}customer/login`,
         {
           method: 'POST',
           body: JSON.stringify({ codeOTP: otpRef.current?.value, email }),
@@ -67,13 +67,16 @@ const OTPInput = () => {
       />
       <button
         onClick={handleSubmit}
-        className={`w-full py-2 mt-5 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm ${
+        className={`w-full py-2 mt-5 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm flex items-center justify-center ${
           isLoading && 'opacity-50'
         }`}
       >
-        {isLoading ? 'Please wait...' : 'Confirm'}
+        {isLoading && <span className='loader'></span>}
+        <div>{isLoading ? 'Please wait...' : 'Confirm'}</div>
       </button>
-      <p className='italic text-red-600'>{errorMessage}</p>
+      <p className='italic text-red-500 font-bold text-[12px]'>
+        {errorMessage}
+      </p>
     </div>
   );
 };

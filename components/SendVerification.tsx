@@ -4,41 +4,30 @@ import { useFetchData } from '@/hooks/useFetchData';
 import React, { useState } from 'react';
 import OTPInput from './OtpInput';
 
-interface MyDataStructure {
-  status: boolean;
-}
-
-interface MyDataType {
-  ResultCode: number;
-  resultCode: number;
-  Status: string;
+interface DataType {
   status: string;
-  Data: MyDataStructure;
-  data: MyDataStructure;
-  message: string;
 }
 
 const SendVerification = () => {
-  const { email, phoneNumber } = useAppSelector(
-    (state) => state.data.dataUserLogin
-  );
+  const { phoneNumber } = useAppSelector((state) => state.data.dataUserLogin);
 
   const [isValidOTP, setIsValidOTP] = useState<boolean>(false);
+  console.log(isValidOTP);
 
-  const { dataRes, isError, isLoading, mutate } = useFetchData<MyDataType>({
+  const { dataRes, isError, isLoading, mutate } = useFetchData<DataType>({
     endpoint: 'customer/login/send-otp',
     body: {
-      phoneNumber,
+      phoneNumber: `+65${phoneNumber}`,
       sendBy: 'SMSOTP',
       senderName: 'Muji Cafe',
     },
     method: 'POST',
   });
-
   if (isLoading) return <p className='text-center'>Loading...</p>;
-  if (isError) return <p className='text-red-500 text-center'>{isError}</p>;
+  if (isError)
+    return <p className='text-red-500 text-center'>{isError.toString()}</p>;
 
-  if (dataRes?.data.status && isValidOTP) {
+  if (dataRes?.status === 'SUCCESS' && isValidOTP) {
     return <OTPInput />;
   } else {
     return (

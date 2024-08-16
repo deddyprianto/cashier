@@ -24,7 +24,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
       <body className={albertSans.className}>
         <ProviderSessions>
           <Header />
-          {children}
+          <div className='p-[16px]'>{children}</div>
         </ProviderSessions>
       </body>
     </html>
