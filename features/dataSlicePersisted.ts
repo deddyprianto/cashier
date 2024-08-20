@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AccessTokenDataType {
-  accessToken: object;
-  domainName: string;
-  idToken: object;
-  refreshToken: object;
-  statusCustomer: boolean;
   isLogin: boolean;
 }
 interface DataState {
@@ -14,11 +9,6 @@ interface DataState {
 
 const initialState: DataState = {
   accessTokenData: {
-    accessToken: {},
-    domainName: '',
-    idToken: {},
-    refreshToken: {},
-    statusCustomer: true,
     isLogin: false,
   },
 };

@@ -1,13 +1,15 @@
 'use client';
 import { setInfoToken } from '@/features/dataSlicePersisted';
 import { useRouter } from 'next/navigation';
-import { useAppDispatch } from '@/hooks';
 import React, { useRef, useState } from 'react';
-import { useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import axios from 'axios';
 
 const OTPInput = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const { email } = useAppSelector((state) => state.data.dataUserLogin);
+  const { email, phoneNumber } = useAppSelector(
+    (state) => state.data.dataUserLogin
+  );
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -15,37 +17,23 @@ const OTPInput = () => {
   const otpRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async () => {
+    const payload = {
+      codeOTP: otpRef.current?.value,
+      phoneNumber: `+65${phoneNumber}`,
+    };
     try {
-      setIsLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL_API}customer/login`,
-        {
-          method: 'POST',
-          body: JSON.stringify({ codeOTP: otpRef.current?.value, email }),
-          headers: {
-            'Content-type': 'application/json',
-          },
-        }
-      );
-      setIsLoading(false);
-      const data = await response.json();
-      if (data.Status === 'SUCCESS') {
-        dispatch(
-          setInfoToken({
-            accessToken: data?.data?.accessToken,
-            domainName: data?.data?.domainName,
-            idToken: data?.data?.idToken,
-            refreshToken: data?.data?.refreshToken,
-            statusCustomer: data?.data?.statusCustomer,
-            isLogin: true,
-          })
-        );
-        router.push('/');
-      } else {
-        setErrorMessage(data?.data?.message);
-      }
+      const response = await axios.post('/api/otp', payload, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error:', error.response?.data);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
     } finally {
       if (otpRef.current) {
         otpRef.current.value = '';

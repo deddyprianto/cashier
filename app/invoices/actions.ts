@@ -8,7 +8,4 @@ export async function createInvoice(formData: FormData) {
   };
 
   console.log('Invoice created:', rawFormData);
-
-  // Di sini Anda bisa menambahkan logika untuk menyimpan ke database
-  // atau melakukan operasi lain
 }

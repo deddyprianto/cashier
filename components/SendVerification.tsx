@@ -14,6 +14,7 @@ const SendVerification = () => {
   const [isValidOTP, setIsValidOTP] = useState<boolean>(false);
   console.log(isValidOTP);
 
+
   const { dataRes, isError, isLoading, mutate } = useFetchData<DataType>({
     endpoint: 'customer/login/send-otp',
     body: {
