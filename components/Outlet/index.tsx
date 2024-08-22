@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 interface DataStructure {
   id: string;
@@ -11,11 +13,15 @@ interface OutletParams {
 }
 
 const OutletCP: React.FC<OutletParams> = ({ data }) => {
+  const router = useRouter();
   return (
     <div>
       {data.map((item) => {
         return (
-          <div
+          <button
+            onClick={() => {
+              router.push(`/products/${item.id}`);
+            }}
             key={item.id}
             className='bg-white shadow-lg rounded-md grid grid-cols-2 mt-4 py-3 justify-items-center cursor-pointer'
           >
@@ -26,7 +32,7 @@ const OutletCP: React.FC<OutletParams> = ({ data }) => {
             )}
 
             <h1>{item.name}</h1>
-          </div>
+          </button>
         );
       })}
     </div>

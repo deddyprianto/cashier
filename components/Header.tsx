@@ -18,6 +18,14 @@ const Header = () => {
             </li>
             <li>
               <Link
+                href='/product'
+                className='flex justify-center items-center flex-col'
+              >
+                <p className='text-blue-500 hover:underline'>Product</p>
+              </Link>
+            </li>
+            <li>
+              <Link
                 href='/outlet'
                 className='flex justify-center items-center flex-col'
               >
