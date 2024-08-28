@@ -14,7 +14,7 @@ export function Popup({ setIsOpen, isOpen, children, fullScreen }: PopupProps) {
       <Dialog
         as='div'
         className='relative z-10'
-        onClose={() => setIsOpen(true)}
+        onClose={() => setIsOpen(false)}
       >
         <Transition.Child
           as={Fragment}

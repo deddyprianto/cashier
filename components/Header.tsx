@@ -18,7 +18,7 @@ const Header = () => {
             </li>
             <li>
               <Link
-                href='/product'
+                href='/portal'
                 className='flex justify-center items-center flex-col'
               >
                 <p className='text-blue-500 hover:underline'>Product</p>
