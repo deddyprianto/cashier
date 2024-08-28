@@ -9,7 +9,6 @@ interface ApiResponse {
 
 async function getData(baseUrl: string): Promise<ApiResponse> {
   const resLoadOutlets = await fetch(`${baseUrl}outlets/load`, {
-    cache: 'no-store',
     method: 'post',
     headers: {
       Accept: 'application/json',

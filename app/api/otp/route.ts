@@ -30,7 +30,7 @@ export async function POST(request: Request): Promise<Response> {
 
   try {
     const { data } = await axios.post(
-      'https://api-ximenjie.proseller-demo.com/crm/api/customer/login',
+      `${process.env.NEXT_PUBLIC_BASE_URL_API}customer/login`,
       payload,
       {
         headers: {

@@ -10,11 +10,7 @@ interface DataType {
 
 const SendVerification = () => {
   const { phoneNumber } = useAppSelector((state) => state.data.dataUserLogin);
-
   const [isValidOTP, setIsValidOTP] = useState<boolean>(false);
-  console.log(isValidOTP);
-
-
   const { dataRes, isError, isLoading, mutate } = useFetchData<DataType>({
     endpoint: 'customer/login/send-otp',
     body: {

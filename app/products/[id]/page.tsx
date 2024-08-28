@@ -1,3 +1,8 @@
+interface PropMapsData {
+  id: string;
+  name: string;
+  itemType: string;
+}
 interface ProductPageParams {
   params: {
     id: string;
@@ -28,17 +33,10 @@ async function getProduct(id: string) {
   return res.json();
 }
 
-interface PropMapsData {
-  id: string;
-  name: string;
-  itemType: string;
-}
-
 export default async function ProductPage({
   params,
 }: Readonly<ProductPageParams>) {
   const product = await getProduct(params.id);
-  console.log('BRAM', product);
 
   return (
     <div>

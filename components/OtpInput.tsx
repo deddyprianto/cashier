@@ -1,5 +1,4 @@
 'use client';
-import { setInfoToken } from '@/features/dataSlicePersisted';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks';
