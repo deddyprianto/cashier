@@ -23,7 +23,7 @@ const OutletCP: React.FC<OutletParams> = ({ data }) => {
               router.push(`/products/${item.id}`);
             }}
             key={item.id}
-            className='bg-white shadow-lg rounded-md grid grid-cols-2 mt-4 py-3 justify-items-center cursor-pointer'
+            className='bg-white shadow-lg rounded-md flex justify-evenly items-center gap-x-6 mt-4 p-3 justify-items-center cursor-pointer'
           >
             {item.orderingStatus === 'AVAILABLE' ? (
               <div className='text-green-500'>Open</div>
@@ -31,7 +31,7 @@ const OutletCP: React.FC<OutletParams> = ({ data }) => {
               <div className='text-red-500'>Close</div>
             )}
 
-            <h1>{item.name}</h1>
+            <h1 className='text-gray-700 capitalize'>{item.name}</h1>
           </button>
         );
       })}

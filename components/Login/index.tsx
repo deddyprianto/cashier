@@ -31,6 +31,7 @@ const LoginCP = () => {
       payload: {
         phoneNumber: `+65${refPhoneNumber.current?.value}`,
       },
+      baseURL: 'https://api-newmujicafe.proseller-demo.com/crm/api/',
     });
 
     setIsLoading(false);

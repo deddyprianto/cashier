@@ -1,8 +1,5 @@
-interface PropMapsData {
-  id: string;
-  name: string;
-  itemType: string;
-}
+import ProductsItem from '@/components/ProductsItem';
+import { cookies } from 'next/headers';
 interface ProductPageParams {
   params: {
     id: string;
@@ -11,7 +8,7 @@ interface ProductPageParams {
 
 export async function generateStaticParams() {
   const responseData = await fetch(
-    'https://api-chickyfun.proseller-demo.com/masterdata/api/outlets/load',
+    `${process.env.NEXT_PUBLIC_BASE_URL_API_MASTER_DATA}outlets/load`,
     {
       method: 'POST',
     }
@@ -28,7 +25,10 @@ export async function generateStaticParams() {
 
 async function getProduct(id: string) {
   const res = await fetch(
-    `https://api-chickyfun.proseller-demo.com/product/api/productpreset/loadcategory/webOrdering/${id}`
+    `${process.env.NEXT_PUBLIC_BASE_URL_API_PRODUCT_PRESET_API}loadcategory/webOrdering/${id}`,
+    {
+      cache: 'no-store',
+    }
   );
   return res.json();
 }
@@ -36,21 +36,10 @@ async function getProduct(id: string) {
 export default async function ProductPage({
   params,
 }: Readonly<ProductPageParams>) {
+  const cookieStore = cookies();
+  const token = cookieStore.get('myToken');
   const product = await getProduct(params.id);
-
   return (
-    <div>
-      {product?.data?.map((item: PropMapsData) => {
-        return (
-          <div key={item.id}>
-            <ul>
-              <li> Name Products: {item.name}</li>
-              <li> Category Type: {item.itemType}</li>
-            </ul>
-            <hr className='divide-y-2 divide-red-500' />
-          </div>
-        );
-      })}
-    </div>
+    <ProductsItem token={token?.value} product={product} idOutlet={params.id} />
   );
 }

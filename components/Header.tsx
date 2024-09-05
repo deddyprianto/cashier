@@ -21,7 +21,7 @@ const Header = () => {
                 href='/portal'
                 className='flex justify-center items-center flex-col'
               >
-                <p className='text-blue-500 hover:underline'>Product</p>
+                <p className='text-blue-500 hover:underline'>People</p>
               </Link>
             </li>
             <li>
@@ -42,10 +42,10 @@ const Header = () => {
             </li>
             <li>
               <Link
-                href='/register'
+                href='/cart'
                 className='flex justify-center items-center flex-col'
               >
-                <p className='text-blue-500 hover:underline'>Register</p>
+                <p className='text-blue-500 hover:underline'>Cart</p>
               </Link>
             </li>
           </ul>

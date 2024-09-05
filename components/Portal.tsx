@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { Popup } from './Popup';
+import {useFormStatus} from 'react-dom'
 import { createNewUser } from '@/app/portal/actions';
-
 interface PropsData {
   data: [];
 }
@@ -14,7 +13,7 @@ interface MappingItem {
 }
 
 const PortalCP: React.FC<PropsData> = ({ data }) => {
-  const { pending } = useFormStatus();
+  const {pending}  = useFormStatus()
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (

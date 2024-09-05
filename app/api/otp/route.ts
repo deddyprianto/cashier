@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
-import serialize from 'cookie';
+import { serialize } from 'cookie';
 import { COOKIE_NAME } from '@/constant';
 
 const MAX_AGE = 43200;

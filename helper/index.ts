@@ -1,7 +1,9 @@
 interface Params {
-  payload?: Record<string, string>;
+  payload?: Record<string, any>;
   endPoint: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  baseURL: string | undefined;
+  token?: string;
 }
 
 interface Response<T = any> {
@@ -14,18 +16,18 @@ export const handledData = async <T>({
   payload,
   endPoint,
   method = 'GET',
+  baseURL,
+  token,
 }: Params): Promise<Response<T>> => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL_API}${endPoint}`,
-      {
-        method,
-        body: JSON.stringify(payload),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      }
-    );
+    const response = await fetch(`${baseURL}${endPoint}`, {
+      method,
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const responseJson = await response.json();
     if (!response.ok) {
       throw new Error(responseJson.message || 'Request failed');
