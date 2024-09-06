@@ -4,6 +4,7 @@ import { handledData } from '@/helper';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import React, { useState } from 'react';
 import { Popup } from './Popup';
+import Link from 'next/link';
 
 interface ProductPresetItemDataType {
   data: [];
@@ -27,12 +28,16 @@ const ProductsItem: React.FC<PropsProductItem> = ({
   idOutlet,
   token,
 }) => {
+  console.log(token);
   const products = useAppSelector((state) => state.data.productPresetItem);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleClick = async (item: { name: string; id: string }) => {
+    if (!token) {
+      return setIsOpen(true);
+    }
     setIsOpen(true);
     setIsLoading(true);
     const { data } = await handledData<ProductPresetItemDataType>({
@@ -60,53 +65,58 @@ const ProductsItem: React.FC<PropsProductItem> = ({
         );
       })}
       <Popup fullScreen={false} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <div className='p-10 flex flex-col'>
-          {isLoading ? (
-            <div className='w-full h-full flex justify-center items-center'>
-              <div className='loaderCustom'></div>
+        {!token ? (
+          <Link href='/login'>
+            <div className='underline text-center p-10 text-rose-600'>
+              Please Login First
             </div>
-          ) : (
-            products.map((item) => {
-              return (
-                <button
-                  onClick={async () => {
-                    const payload = {
-                      outletID: `outlet::${idOutlet}`,
-                      details: [
-                        {
-                          productID: item.productID,
-                          unitPrice: 5,
-                          quantity: 1,
-                          remark: '',
-                        },
-                      ],
-                    };
-                    try {
-                      const response = await handledData({
-                        baseURL:
-                          'https://api-newmujicafe.proseller-demo.com/ordering/api/',
-                        endPoint: 'cart/additem',
-                        method: 'POST',
-                        payload,
-                        token: token,
-                      });
-                      if (response.status === 'success') {
-                        alert('adding item success');
+          </Link>
+        ) : (
+          <div className='p-10 flex flex-col'>
+            {isLoading ? (
+              <div className='w-full h-full flex justify-center items-center'>
+                <div className='loaderCustom'></div>
+              </div>
+            ) : (
+              products.map((item) => {
+                return (
+                  <button
+                    onClick={async () => {
+                      const payload = {
+                        outletID: `outlet::${idOutlet}`,
+                        details: [
+                          {
+                            productID: item.productID,
+                            unitPrice: 5,
+                            quantity: 1,
+                            remark: '',
+                          },
+                        ],
+                      };
+                      try {
+                        const response = await handledData({
+                          baseURL:
+                            'https://api-newmujicafe.proseller-demo.com/ordering/api/',
+                          endPoint: 'cart/additem',
+                          method: 'POST',
+                          payload,
+                          token: token,
+                        });
+                      } catch (error) {
+                        alert(error);
+                        console.log(error);
                       }
-                    } catch (error) {
-                      alert(error);
-                      console.log(error);
-                    }
-                  }}
-                  className='mt-3 hover:bg-slate-500'
-                  key={item.id}
-                >
-                  {item.name}
-                </button>
-              );
-            })
-          )}
-        </div>
+                    }}
+                    className='mt-3 hover:bg-slate-500'
+                    key={item.id}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        )}
       </Popup>
     </div>
   );

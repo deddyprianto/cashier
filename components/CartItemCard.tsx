@@ -52,11 +52,7 @@ const CartItemCard: React.FC<PropsCartItemCard> = ({ item, id }) => {
               className='border rounded p-1'
               value={card.quantity}
             >
-              {[...Array(10).keys()].map((num) => (
-                <option key={num + 1} value={num + 1}>
-                  {num + 1}
-                </option>
-              ))}
+              {card.quantity}
             </select>
           </div>
         </div>
