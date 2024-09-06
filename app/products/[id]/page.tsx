@@ -1,5 +1,4 @@
 import ProductsItem from '@/components/ProductsItem';
-import { cookies } from 'next/headers';
 interface ProductPageParams {
   params: {
     id: string;
@@ -36,10 +35,6 @@ async function getProduct(id: string) {
 export default async function ProductPage({
   params,
 }: Readonly<ProductPageParams>) {
-  const cookieStore = cookies();
-  const token = cookieStore.get('myToken');
   const product = await getProduct(params.id);
-  return (
-    <ProductsItem token={token?.value} product={product} idOutlet={params.id} />
-  );
+  return <ProductsItem product={product} idOutlet={params.id} />;
 }

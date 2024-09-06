@@ -2,7 +2,7 @@
 import { setDataProductPresetItem } from '@/features/dataSlice';
 import { handledData } from '@/helper';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Popup } from './Popup';
 import Link from 'next/link';
 
@@ -21,14 +21,15 @@ interface PropsProductItem {
     data: ItemFormatData[];
   };
   idOutlet: string;
-  token?: string;
 }
-const ProductsItem: React.FC<PropsProductItem> = ({
-  product,
-  idOutlet,
-  token,
-}) => {
-  console.log(token);
+const ProductsItem: React.FC<PropsProductItem> = ({ product, idOutlet }) => {
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    fetch('/api/token')
+      .then((res) => res.json())
+      .then((data) => setToken(data.token));
+  }, []);
+
   const products = useAppSelector((state) => state.data.productPresetItem);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
