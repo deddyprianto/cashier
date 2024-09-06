@@ -24,10 +24,7 @@ export async function generateStaticParams() {
 
 async function getProduct(id: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL_API_PRODUCT_PRESET_API}loadcategory/webOrdering/${id}`,
-    {
-      cache: 'no-store',
-    }
+    `${process.env.NEXT_PUBLIC_BASE_URL_API_PRODUCT_PRESET_API}loadcategory/webOrdering/${id}`
   );
   return res.json();
 }
