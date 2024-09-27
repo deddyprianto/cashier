@@ -33,5 +33,5 @@ export default async function ProductPage({
   params,
 }: Readonly<ProductPageParams>) {
   const product = await getProduct(params.id);
-  return <div>kimak kau</div>;
+  return <ProductsItem product={product} idOutlet={params.id} />;
 }
