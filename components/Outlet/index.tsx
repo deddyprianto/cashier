@@ -14,6 +14,7 @@ interface OutletParams {
 
 const OutletCP: React.FC<OutletParams> = ({ data }) => {
   const router = useRouter();
+  console.log("kimak");
   return (
     <div>
       {data.map((item) => {
